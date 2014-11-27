@@ -65,7 +65,7 @@
 				<section data-markdown>
 # GHC internals
 
-Stockholm Haskell User Group
+Haskell Stockholm
 
 Wednesday, November 27, 2014
 				</section>
@@ -73,15 +73,17 @@ Wednesday, November 27, 2014
 
 				<section data-markdown>
 This is *my* take on GHC internals!
+
+Much of what I cover will not be specific to GHC, as I think compilers in
+general are interesting.
 				</section>
 
 
         <section data-markdown>
-## The Frontend
+# Frontend
 
-Lexeing, parsing and type checking.
+Lexing, parsing and type checking.
 
-These are not specific to GHC, as most compilers have these steps.
         </section>
 
 				<section >
@@ -90,7 +92,7 @@ These are not specific to GHC, as most compilers have these steps.
 
 ![Chomsky Hierarchy](./img/Chomsky-hierarchy.svg)
 
-Lexers are only as powerful as finite automatas, they fall in the smallest set
+Lexers are only as powerful as finite automata, they fall in the smallest set
 of recognized languages in the Chomsky Hierarchy, the *regular* languages.
           </section>
 
@@ -134,11 +136,11 @@ LexerError.hs:2:13: parse error on input `♠♣♥♦'
 
 ![Chomsky Hierarchy](./img/Chomsky-hierarchy.svg)
 
-Most parsers are less powerful than non-deterministic push-down automatas,
+Most parsers are less powerful than non-deterministic push-down automata,
 which correspond to the *context-free* languages in the Chomsky Hierarchy.
 
 Perhaps you've seen and forgotten names like LL(1), LL(2), LR(1),
-GLR etc from the Dragon book. :)
+GLR etc. from the Dragon book. :)
           </section>
 
           <section data-markdown>
@@ -217,8 +219,44 @@ I won't cover type checking.
 
 
 
+        <section id="fragments">
+					<section>
+            <h1>Backend</h1>
 
+Convert memory representation of Haskell to executable code and optimize while
+doing so.
 
+<p class="fragment">GHC converts Haskell to executable code by <i>successive recasting</i></p>
+<p class="fragment">Each recasting gets us closer to machine code, we call
+these <i>Intermediate Representations</i> IR for short.</p>
+<p class="fragment">At each representation, we do optimizations that are
+appropriate for that level of abstraction. (Discuss while looking at them)</p>
+					</section>
+
+        </section>
+
+        <section data-markdown>
+![Recastings in Haskell Backend](./img/suc_recasts.png)
+        </section>
+
+        <section data-markdown>
+# Runtime
+
+The runtime system will be embedded in your binary.
+
+It things that can't be implemented in library code. Garbage collector,
+Exceptions (Mike's favorite!). Parallelism, locks, STM, etc.
+        </section>
+
+        <section data-markdown>
+# Thank you
+
+Arash Rouhani
+
+[@Tarrasch](https://github.com/tarrasch/) on github
+
+http://tarrasch.github.io/ghc-intro-nov-2014/ recursion yay
+        </section>
 
 
 
